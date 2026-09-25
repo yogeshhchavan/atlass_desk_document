@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: atlas-desk
+    runtime: python
+    plan: free
+    buildCommand: ""
+    startCommand: "python server.py"
+    healthCheckPath: /
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: GEMINI_API_KEY
+        sync: false

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A workspace-scoped document assistant demo." />
+    <title>Atlas Desk | Document intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="login-screen" id="loginScreen">
+      <div class="login-card">
+        <div class="brand"><span class="brand-mark">A</span><span>atlas desk</span></div>
+        <p class="eyebrow accent">PRIVATE DOCUMENT INTELLIGENCE</p>
+        <h1>Sign in to your workspaces.</h1>
+        <p class="muted">Your documents, retrieval, and actions stay scoped to the workspace you choose.</p>
+        <form id="loginForm">
+          <label>Email<input id="loginEmail" type="email" value="demo@atlas.local" required /></label>
+          <label>Password<input id="loginPassword" type="password" value="assessment123" required /></label>
+          <button class="primary-button" type="submit">Sign in <span>→</span></button>
+          <small id="loginError"></small>
+        </form>
+      </div>
+    </div>
+    <div class="app-shell" id="appShell">
+      <aside class="sidebar">
+        <div class="brand"><span class="brand-mark">A</span><span>atlas desk</span></div>
+        <div class="workspace-label">Workspace</div>
+        <label class="workspace-picker">
+          <span class="workspace-dot" id="workspaceDot"></span>
+          <select id="workspaceSelect" aria-label="Active workspace"></select>
+          <span class="chevron">⌄</span>
+        </label>
+        <nav class="nav-list" aria-label="Main navigation">
+          <button class="nav-item active" data-view="overview"><span>◈</span> Overview</button>
+          <button class="nav-item" data-view="documents"><span>▧</span> Documents <b id="documentCountBadge">0</b></button>
+          <button class="nav-item" data-view="activity"><span>⌁</span> Activity</button>
+        </nav>
+        <div class="sidebar-spacer"></div>
+        <div class="privacy-note"><span class="lock-icon">⌑</span><div><strong>Private by design</strong><p>Retrieval is filtered by workspace before ranking.</p></div></div>
+        <div class="profile"><div class="avatar">JD</div><div><strong>Jordan Davis</strong><span>Personal account</span></div><button aria-label="Account menu">•••</button></div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar"><div><p class="eyebrow" id="dateLabel">THURSDAY, SEPTEMBER 25, 2026</p><h1 id="pageTitle">Good morning, Jordan.</h1></div><div class="top-actions"><span class="status-pill"><i></i> Protected workspace</span><button class="icon-button" aria-label="Notifications">♧<span class="notification-dot"></span></button></div></header>
+
+        <section id="overviewView" class="view active-view">
+          <div class="hero-row"><div><p class="eyebrow accent">ACTIVE WORKSPACE</p><h2 id="workspaceHeading">Product Launch</h2><p class="muted">Your team's source of truth, ready to search.</p></div><button class="primary-button" id="uploadHeroButton"><span>＋</span> Add documents</button></div>
+          <div class="metrics-grid"><article class="metric-card"><div class="metric-top"><span class="metric-label">Documents</span><span class="metric-icon blue">▧</span></div><strong id="metricDocuments">0</strong><span class="metric-foot">Across this workspace</span></article><article class="metric-card"><div class="metric-top"><span class="metric-label">Questions asked</span><span class="metric-icon yellow">?</span></div><strong id="metricQuestions">0</strong><span class="metric-foot">This workspace</span></article><article class="metric-card"><div class="metric-top"><span class="metric-label">Tool actions</span><span class="metric-icon coral">↗</span></div><strong id="metricTools">0</strong><span class="metric-foot">Validated executions</span></article></div>
+          <div class="content-grid"><section class="panel chat-panel"><div class="panel-heading"><div><h3>Ask your workspace</h3><p>Answers are grounded in indexed documents.</p></div><span class="live-indicator"><i></i> Ready</span></div><div class="chat-messages" id="chatMessages"></div><form class="chat-form" id="chatForm"><textarea id="questionInput" rows="2" placeholder="Ask about your documents..." aria-label="Ask a question"></textarea><div class="chat-form-footer"><span class="hint">↵ to send · grounded answers only</span><button class="send-button" type="submit" aria-label="Send question">↑</button></div></form></section><section class="panel recent-panel"><div class="panel-heading"><div><h3>Recent documents</h3><p>Indexed and ready for retrieval.</p></div><button class="text-button" data-view-target="documents">View all</button></div><div id="recentDocuments" class="document-list"></div><button class="dropzone" id="uploadDropzone"><span class="upload-symbol">↥</span><span><strong>Drop files here</strong><small>or browse from your computer</small></span></button></section></div>
+          <section class="panel activity-panel"><div class="panel-heading"><div><h3>Latest activity</h3><p>Every action stays inside the active workspace.</p></div><button class="text-button" data-view-target="activity">View log</button></div><div id="activityList" class="activity-list"></div></section>
+        </section>
+
+        <section id="documentsView" class="view"><div class="view-heading"><div><p class="eyebrow accent">KNOWLEDGE BASE</p><h2>Documents</h2><p class="muted">The shared index contains chunks from every workspace, filtered before search.</p></div><button class="primary-button" id="uploadDocumentsButton"><span>＋</span> Add documents</button></div><div class="panel document-table-panel"><div class="table-header"><span>Name</span><span>Chunks</span><span>Added</span><span>Status</span></div><div id="documentsTable"></div></div></section>
+
+        <section id="activityView" class="view"><div class="view-heading"><div><p class="eyebrow accent">AUDIT TRAIL</p><h2>Activity</h2><p class="muted">A transparent record of retrievals and validated tool calls.</p></div></div><div class="panel activity-log-panel"><div id="fullActivityList" class="activity-list"></div></div></section>
+      </main>
+    </div>
+    <input type="file" id="fileInput" multiple hidden accept=".txt,.md,.csv,.pdf" />
+    <div class="toast" id="toast" role="status"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
