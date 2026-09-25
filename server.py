@@ -12,7 +12,7 @@ from http import cookies
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(ROOT, "atlas.db")
-HOST = "127.0.0.1"
+HOST = os.environ.get("HOST", "0.0.0.0")
 PORT = int(os.environ.get("PORT", "4173"))
 STOP_WORDS = {"what", "which", "when", "where", "who", "how", "the", "and", "for", "with", "from", "this", "that", "is", "are", "was", "were", "about", "does", "do", "did", "you", "your"}
 
